@@ -1,0 +1,14 @@
+{
+  "name": "Pulso Social",
+  "short_name": "Pulso",
+  "description": "Agendador e analytics pessoal de Instagram e X",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0E0B12",
+  "theme_color": "#0E0B12",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

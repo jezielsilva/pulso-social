@@ -1,0 +1,34 @@
+name = "pulso-social"
+main = "worker/index.ts"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Front-end (web/dist) served by the same Worker. API, OAuth and public media routes run the Worker first.
+[assets]
+directory = "./web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*", "/auth/*", "/m/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pulso"
+database_id = "COLOQUE_O_ID_AQUI" # saída de: npx wrangler d1 create pulso
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "pulso-media"
+
+[triggers]
+# a cada minuto: publica posts vencidos / continua vídeos em processamento
+# 09:00 UTC (06:00 em Brasília): coleta métricas do Instagram
+crons = ["* * * * *", "0 9 * * *"]
+
+[vars]
+GRAPH_VERSION = "v23.0"
+TIMEZONE = "America/Sao_Paulo"
+# PUBLIC_URL = "https://pulso-social.<seu-subdominio>.workers.dev"
+
+# Segredos (npx wrangler secret put NOME): APP_PASSWORD, SESSION_SECRET,
+# META_APP_ID, META_APP_SECRET, X_CLIENT_ID, X_CLIENT_SECRET
